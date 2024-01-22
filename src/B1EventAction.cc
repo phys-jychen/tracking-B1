@@ -32,14 +32,15 @@
 
 #include "G4Event.hh"
 #include "G4RunManager.hh"
+#include "G4SystemOfUnits.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 B1EventAction::B1EventAction(B1RunAction* runAction)
-: G4UserEventAction(),
-  fRunAction(runAction),
-  fEdep(0.)
-{} 
+        : G4UserEventAction(),
+          fRunAction(runAction),
+          fEdep(0.)
+{}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -49,16 +50,48 @@ B1EventAction::~B1EventAction()
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void B1EventAction::BeginOfEventAction(const G4Event*)
-{    
-  fEdep = 0.;
+{
+    fEdep = 0.;
+    fX.clear();
+    fY.clear();
+    fZ.clear();
+    fTime.clear();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void B1EventAction::EndOfEventAction(const G4Event*)
-{   
-  // accumulate statistics in run action
-  fRunAction->AddEdep(fEdep);
-}
+{
+    const G4double c = 299.792458 * mm / ns;
+    const G4double mass = 938.272088 * MeV;
+    // accumulate statistics in run action
+    fRunAction->AddEdep(fEdep);
+    vector<G4double> p = {};
+    for (G4int i = 0; i < (G4int) fX.size(); i++)
+    {
+        G4double speed = TMath::Sqrt(TMath::Power(fX.at(i), 2) + TMath::Power(fY.at(i), 2) + TMath::Power(fZ.at(i), 2)) / fTime.at(i) / c;
+        G4double momentum = mass * speed / TMath::Sqrt(1 - TMath::Power(speed, 2));
+        p.emplace_back(momentum);
+    }
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+    G4cout << "X: " << endl;
+    for (G4int i = 0; i < (G4int) fX.size(); i++)
+        G4cout << fX.at(i) << "  ";
+    G4cout << G4endl;
+    G4cout << "Y: " << endl;
+    for (G4int i = 0; i < (G4int) fY.size(); i++)
+        G4cout << fY.at(i) << "  ";
+    G4cout << G4endl;
+    G4cout << "Z: " << endl;
+    for (G4int i = 0; i < (G4int) fZ.size(); i++)
+        G4cout << fZ.at(i) << "  ";
+    G4cout << G4endl;
+    G4cout << "Time: " << endl;
+    for (G4int i = 0; i < (G4int) fTime.size(); i++)
+        G4cout << fTime.at(i) << "  ";
+    G4cout << G4endl;
+    G4cout << "Momentum: " << endl;
+    for (G4int i = 0; i < (G4int) p.size(); i++)
+        G4cout << p.at(i) << "  ";
+    G4cout << G4endl;
+}

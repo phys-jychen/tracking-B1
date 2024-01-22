@@ -68,6 +68,14 @@ void B1SteppingAction::UserSteppingAction(const G4Step *step) {
     // collect energy deposited in this step
     G4double edepStep = step->GetTotalEnergyDeposit();
     fEventAction->AddEdep(edepStep);
+
+    // Collect position and time difference
+    G4ThreeVector positionStep = step->GetDeltaPosition();
+    G4double xStep = positionStep.getX();
+    G4double yStep = positionStep.getY();
+    G4double zStep = positionStep.getZ();
+    G4double timeStep = step->GetDeltaTime();
+    fEventAction->AddPositionTime(xStep, yStep, zStep, timeStep);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

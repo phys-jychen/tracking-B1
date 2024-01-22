@@ -1,4 +1,4 @@
-# Example B1 for Tracking
+# Geant4 Example B1 for Tracking
 
 ## Description
 This is a simple Geant4 program for particle tracking modified from Example B1 (basic) provided by Geant4 toolkit.

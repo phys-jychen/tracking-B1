@@ -34,6 +34,10 @@
 #include "G4Accumulable.hh"
 #include "globals.hh"
 
+#include "g4root.hh"
+#include "TFile.h"
+#include "TTree.h"
+
 class G4Run;
 
 /// Run action class
@@ -44,7 +48,7 @@ class G4Run;
 
 class B1RunAction : public G4UserRunAction
 {
-  public:
+public:
     B1RunAction();
     virtual ~B1RunAction();
 
@@ -52,9 +56,9 @@ class B1RunAction : public G4UserRunAction
     virtual void BeginOfRunAction(const G4Run*);
     virtual void   EndOfRunAction(const G4Run*);
 
-    void AddEdep (G4double edep); 
+    void AddEdep (G4double edep);
 
-  private:
+private:
     G4Accumulable<G4double> fEdep;
     G4Accumulable<G4double> fEdep2;
 };

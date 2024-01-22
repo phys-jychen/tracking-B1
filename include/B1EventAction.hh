@@ -32,6 +32,11 @@
 
 #include "G4UserEventAction.hh"
 #include "globals.hh"
+#include <vector>
+#include "g4root.hh"
+#include "TMath.h"
+
+using namespace std;
 
 class B1RunAction;
 
@@ -40,7 +45,7 @@ class B1RunAction;
 
 class B1EventAction : public G4UserEventAction
 {
-  public:
+public:
     B1EventAction(B1RunAction* runAction);
     virtual ~B1EventAction();
 
@@ -48,10 +53,21 @@ class B1EventAction : public G4UserEventAction
     virtual void EndOfEventAction(const G4Event* event);
 
     void AddEdep(G4double edep) { fEdep += edep; }
+    void AddPositionTime(G4double x, G4double y, G4double z, G4double time)
+    {
+        fX.emplace_back(x);
+        fY.emplace_back(y);
+        fZ.emplace_back(z);
+        fTime.emplace_back(time);
+    }
 
-  private:
+private:
     B1RunAction* fRunAction;
     G4double     fEdep;
+    vector<G4double> fX;
+    vector<G4double> fY;
+    vector<G4double> fZ;
+    vector<G4double> fTime;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

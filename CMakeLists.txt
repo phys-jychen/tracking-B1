@@ -23,6 +23,11 @@ endif()
 include(${Geant4_USE_FILE})
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
+FIND_PACKAGE(ROOT COMPONENTS Geom TMVA Eve Gui RGL EG)
+INCLUDE_DIRECTORIES(${ROOT_INCLUDE_DIRS})
+INCLUDE_DIRECTORIES(${ROOT_INCLUDE_DIR})
+LINK_LIBRARIES(${ROOT_LIBRARIES})
+LINK_DIRECTORIES(${ROOT_LIBRARY_DIR})
 
 #----------------------------------------------------------------------------
 # Locate sources and headers for this project
