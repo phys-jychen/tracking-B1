@@ -64,6 +64,7 @@ public:
 
     void AddEdep (G4double edep);
     void AddPositionTimeMomentum(G4double x, G4double y, G4double z, G4double t, G4double p);
+    void fill();
 
 private:
     G4Accumulable<G4double> fEdep;

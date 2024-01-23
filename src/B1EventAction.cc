@@ -27,6 +27,7 @@
 /// \file B1EventAction.cc
 /// \brief Implementation of the B1EventAction class
 
+#include <cassert>
 #include "B1EventAction.hh"
 #include "B1RunAction.hh"
 
@@ -63,10 +64,19 @@ void B1EventAction::BeginOfEventAction(const G4Event*)
 
 void B1EventAction::EndOfEventAction(const G4Event*)
 {
+    // TODO: Modify data storage --- do not merge the vectors
+    assert(fX.size() == fY.size());
+    assert(fX.size() == fZ.size());
+    assert(fX.size() == fTime.size());
+    assert(fX.size() == fp.size());
+
     fRunAction->AddEdep(fEdep);
     for (G4int i = 0; i < (G4int) fX.size(); i++)
         fRunAction->AddPositionTimeMomentum(fX.at(i), fY.at(i), fZ.at(i), fTime.at(i), fp.at(i));
 
+    fRunAction->fill();
+
+    /*
     G4cout << "X diff: " << endl;
     for (G4int i = 0; i < (G4int) fX.size(); i++)
         G4cout << fX.at(i) << "  ";
@@ -87,4 +97,5 @@ void B1EventAction::EndOfEventAction(const G4Event*)
     for (G4int i = 0; i < (G4int) fp.size(); i++)
         G4cout << fp.at(i) << "  ";
     G4cout << G4endl;
+     */
 }
