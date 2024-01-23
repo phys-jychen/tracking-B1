@@ -42,15 +42,8 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 B1RunAction::B1RunAction()
-        : G4UserRunAction(),
-          fEdep(0.),
-          fEdep2(0.)
-{
-    // Register accumulable to the accumulable manager
-    G4AccumulableManager* accumulableManager = G4AccumulableManager::Instance();
-    accumulableManager->RegisterAccumulable(fEdep);
-    accumulableManager->RegisterAccumulable(fEdep2);
-}
+        : G4UserRunAction()
+{}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -68,48 +61,35 @@ void B1RunAction::BeginOfRunAction(const G4Run*)
     G4AccumulableManager* accumulableManager = G4AccumulableManager::Instance();
     accumulableManager->Reset();
 
-//    G4AnalysisManager* man = G4AnalysisManager::Instance();
-
     filename = "out.root";
     file = new TFile(filename, "RECREATE");
-    tree = new TTree("tree", "Momenta");
+    tree = new TTree("tree", "MC events");
 
-    tree->Branch("Hit_Energy", &fE);
-    tree->Branch("Hit_Time", &fTime);
-    tree->Branch("Hit_X", &fX);
-    tree->Branch("Hit_Y", &fY);
-    tree->Branch("Hit_Z", &fZ);
-    tree->Branch("momentum", &fp);
+    tree->Branch("Hit_Energy", &Hit_E);
+    tree->Branch("Time_Diff", &Time_Diff);
+    tree->Branch("Hit_X", &Hit_X);
+    tree->Branch("Hit_Y", &Hit_Y);
+    tree->Branch("Hit_Z", &Hit_Z);
+    tree->Branch("momentum", &Hit_p);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void B1RunAction::EndOfRunAction(const G4Run*)
 {
-    file->WriteTObject(tree, "tree", "Overwrite");
+    file->Write("", TObject::kOverwrite);
     file->Close();
     delete file;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void B1RunAction::AddEdep(G4double edep)
-{
-    fEdep  += edep;
-    fEdep2 += edep*edep;
-}
-
 void B1RunAction::AddHit(G4double x, G4double y, G4double z, G4double t, G4double p, G4double edep)
 {
-    fX.emplace_back(x);
-    fY.emplace_back(y);
-    fZ.emplace_back(z);
-    fTime.emplace_back(t);
-    fp.emplace_back(p);
-    fE.emplace_back(edep);
-}
-
-void B1RunAction::fill()
-{
-    tree->Fill();
+    Hit_X.emplace_back(x);
+    Hit_Y.emplace_back(y);
+    Hit_Z.emplace_back(z);
+    Time_Diff.emplace_back(t);
+    Hit_p.emplace_back(p);
+    Hit_E.emplace_back(edep);
 }

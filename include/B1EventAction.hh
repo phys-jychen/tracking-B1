@@ -52,7 +52,6 @@ public:
     virtual void BeginOfEventAction(const G4Event* event);
     virtual void EndOfEventAction(const G4Event* event);
 
-    void AddEdep(G4double edep) { fEdep += edep; }
     void AddHit(G4double x, G4double y, G4double z, G4double time, G4double momentum, G4double edep)
     {
         fX.emplace_back(x);
@@ -65,7 +64,6 @@ public:
 
 private:
     B1RunAction* fRunAction;
-    G4double     fEdep;
     vector<G4double> fX;
     vector<G4double> fY;
     vector<G4double> fZ;

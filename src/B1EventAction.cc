@@ -40,7 +40,12 @@
 B1EventAction::B1EventAction(B1RunAction* runAction)
         : G4UserEventAction(),
           fRunAction(runAction),
-          fEdep(0.)
+          fX({}),
+          fY({}),
+          fZ({}),
+          fTime({}),
+          fp({}),
+          fE({})
 {}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -52,32 +57,42 @@ B1EventAction::~B1EventAction()
 
 void B1EventAction::BeginOfEventAction(const G4Event*)
 {
-    fEdep = 0.;
     fX.clear();
     fY.clear();
     fZ.clear();
     fTime.clear();
     fp.clear();
     fE.clear();
+    fRunAction->Hit_X.clear();
+    fRunAction->Hit_Y.clear();
+    fRunAction->Hit_Z.clear();
+    fRunAction->Time_Diff.clear();
+    fRunAction->Hit_p.clear();
+    fRunAction->Hit_E.clear();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void B1EventAction::EndOfEventAction(const G4Event*)
 {
-    // TODO: Modify data storage --- do not merge the vectors
     assert(fX.size() == fY.size());
     assert(fX.size() == fZ.size());
     assert(fX.size() == fTime.size());
     assert(fX.size() == fp.size());
     assert(fX.size() == fE.size());
 
-    fRunAction->AddEdep(fEdep);
     for (G4int i = 0; i < (G4int) fX.size(); i++)
         fRunAction->AddHit(fX.at(i), fY.at(i), fZ.at(i), fTime.at(i), fp.at(i), fE.at(i));
 
-    fRunAction->fill();
+    assert(fRunAction->Hit_X.size() == fRunAction->Hit_Y.size());
+    assert(fRunAction->Hit_X.size() == fRunAction->Hit_Z.size());
+    assert(fRunAction->Hit_X.size() == fRunAction->Time_Diff.size());
+    assert(fRunAction->Hit_X.size() == fRunAction->Hit_E.size());
+    assert(fRunAction->Hit_X.size() == fRunAction->Hit_p.size());
 
+    fRunAction->tree->Fill();
+
+    // Printing hit information --- for debugging
     /*
     G4cout << "X [mm]: " << endl;
     for (G4int i = 0; i < (G4int) fX.size(); i++)
@@ -91,13 +106,17 @@ void B1EventAction::EndOfEventAction(const G4Event*)
     for (G4int i = 0; i < (G4int) fZ.size(); i++)
         G4cout << fZ.at(i) << "  ";
     G4cout << G4endl;
-    G4cout << "Global time [ns]: " << endl;
+    G4cout << "Time difference [ns]: " << endl;
     for (G4int i = 0; i < (G4int) fTime.size(); i++)
         G4cout << fTime.at(i) << "  ";
     G4cout << G4endl;
     G4cout << "Momentum [MeV]: " << endl;
     for (G4int i = 0; i < (G4int) fp.size(); i++)
         G4cout << fp.at(i) << "  ";
+    G4cout << G4endl;
+    G4cout << "Energy [MeV]: " << endl;
+    for (G4int i = 0; i < (G4int) fE.size(); i++)
+        G4cout << fE.at(i) << "  ";
     G4cout << G4endl << G4endl;
      */
 }

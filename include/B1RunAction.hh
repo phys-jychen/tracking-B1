@@ -62,23 +62,18 @@ public:
     virtual void BeginOfRunAction(const G4Run*);
     virtual void   EndOfRunAction(const G4Run*);
 
-    void AddEdep (G4double edep);
     void AddHit(G4double x, G4double y, G4double z, G4double t, G4double p, G4double edep);
-    void fill();
 
-private:
-    G4Accumulable<G4double> fEdep;
-    G4Accumulable<G4double> fEdep2;
-    vector<G4double> fX;
-    vector<G4double> fY;
-    vector<G4double> fZ;
-    vector<G4double> fTime;
-    vector<G4double> fp;
-    vector<G4double> fE;
-
-    TString filename = "";
+    TString filename;
     TFile* file = nullptr;
     TTree* tree = nullptr;
+
+    vector<G4double> Hit_X;
+    vector<G4double> Hit_Y;
+    vector<G4double> Hit_Z;
+    vector<G4double> Time_Diff;
+    vector<G4double> Hit_p;
+    vector<G4double> Hit_E;
 };
 
 #endif
