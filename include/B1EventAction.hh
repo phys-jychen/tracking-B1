@@ -53,13 +53,14 @@ public:
     virtual void EndOfEventAction(const G4Event* event);
 
     void AddEdep(G4double edep) { fEdep += edep; }
-    void AddPositionTimeMomentum(G4double x, G4double y, G4double z, G4double time, G4double momentum)
+    void AddHit(G4double x, G4double y, G4double z, G4double time, G4double momentum, G4double edep)
     {
         fX.emplace_back(x);
         fY.emplace_back(y);
         fZ.emplace_back(z);
         fTime.emplace_back(time);
         fp.emplace_back(momentum);
+        fE.emplace_back(edep);
     }
 
 private:
@@ -70,6 +71,7 @@ private:
     vector<G4double> fZ;
     vector<G4double> fTime;
     vector<G4double> fp;
+    vector<G4double> fE;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

@@ -63,7 +63,7 @@ public:
     virtual void   EndOfRunAction(const G4Run*);
 
     void AddEdep (G4double edep);
-    void AddPositionTimeMomentum(G4double x, G4double y, G4double z, G4double t, G4double p);
+    void AddHit(G4double x, G4double y, G4double z, G4double t, G4double p, G4double edep);
     void fill();
 
 private:
@@ -74,6 +74,7 @@ private:
     vector<G4double> fZ;
     vector<G4double> fTime;
     vector<G4double> fp;
+    vector<G4double> fE;
 
     TString filename = "";
     TFile* file = nullptr;

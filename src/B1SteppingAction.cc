@@ -91,7 +91,7 @@ void B1SteppingAction::UserSteppingAction(const G4Step *step) {
 //    G4double momentum = mass * speed / TMath::Sqrt(1 - TMath::Power(speed, 2));
 //    G4Track* trackStep = step->GetTrack();
 //    G4double momentum = trackStep->GetMomentum().mag();
-    fEventAction->AddPositionTimeMomentum(xStep, yStep, zStep, timeStep, momentum);
+    fEventAction->AddHit(xStep, yStep, zStep, timeStep, momentum, edepStep);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

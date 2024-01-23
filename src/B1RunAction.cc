@@ -74,6 +74,7 @@ void B1RunAction::BeginOfRunAction(const G4Run*)
     file = new TFile(filename, "RECREATE");
     tree = new TTree("tree", "Momenta");
 
+    tree->Branch("Hit_Energy", &fE);
     tree->Branch("Hit_Time", &fTime);
     tree->Branch("Hit_X", &fX);
     tree->Branch("Hit_Y", &fY);
@@ -98,13 +99,14 @@ void B1RunAction::AddEdep(G4double edep)
     fEdep2 += edep*edep;
 }
 
-void B1RunAction::AddPositionTimeMomentum(G4double x, G4double y, G4double z, G4double t, G4double p)
+void B1RunAction::AddHit(G4double x, G4double y, G4double z, G4double t, G4double p, G4double edep)
 {
     fX.emplace_back(x);
     fY.emplace_back(y);
     fZ.emplace_back(z);
     fTime.emplace_back(t);
     fp.emplace_back(p);
+    fE.emplace_back(edep);
 }
 
 void B1RunAction::fill()

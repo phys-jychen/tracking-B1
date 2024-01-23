@@ -58,6 +58,7 @@ void B1EventAction::BeginOfEventAction(const G4Event*)
     fZ.clear();
     fTime.clear();
     fp.clear();
+    fE.clear();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -69,10 +70,11 @@ void B1EventAction::EndOfEventAction(const G4Event*)
     assert(fX.size() == fZ.size());
     assert(fX.size() == fTime.size());
     assert(fX.size() == fp.size());
+    assert(fX.size() == fE.size());
 
     fRunAction->AddEdep(fEdep);
     for (G4int i = 0; i < (G4int) fX.size(); i++)
-        fRunAction->AddPositionTimeMomentum(fX.at(i), fY.at(i), fZ.at(i), fTime.at(i), fp.at(i));
+        fRunAction->AddHit(fX.at(i), fY.at(i), fZ.at(i), fTime.at(i), fp.at(i), fE.at(i));
 
     fRunAction->fill();
 
