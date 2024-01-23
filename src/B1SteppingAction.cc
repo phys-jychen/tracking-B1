@@ -35,6 +35,7 @@
 #include "G4Event.hh"
 #include "G4RunManager.hh"
 #include "G4LogicalVolume.hh"
+#include "G4SystemOfUnits.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -75,7 +76,15 @@ void B1SteppingAction::UserSteppingAction(const G4Step *step) {
     G4double yStep = positionStep.getY();
     G4double zStep = positionStep.getZ();
     G4double timeStep = step->GetDeltaTime();
-    fEventAction->AddPositionTime(xStep, yStep, zStep, timeStep);
+
+//    const G4double c = 299.792458 * mm / ns;
+//    const G4double mass = 938.272088 * MeV;
+//    G4double distanceStep = step->GetDeltaPosition().mag();
+//    G4double speed = distanceStep / timeStep / c;
+//    G4double momentum = mass * speed / TMath::Sqrt(1 - TMath::Power(speed, 2));
+    G4Track* trackStep = step->GetTrack();
+    G4double momentum = trackStep->GetMomentum().mag();
+    fEventAction->AddPositionTimeMomentum(xStep, yStep, zStep, timeStep, momentum);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

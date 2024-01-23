@@ -33,12 +33,18 @@
 #include "G4UserRunAction.hh"
 #include "G4Accumulable.hh"
 #include "globals.hh"
+#include <vector>
 
 #include "g4root.hh"
 #include "TFile.h"
 #include "TTree.h"
+#include "TString.h"
+
+using namespace std;
 
 class G4Run;
+class TFile;
+class TTree;
 
 /// Run action class
 ///
@@ -57,10 +63,20 @@ public:
     virtual void   EndOfRunAction(const G4Run*);
 
     void AddEdep (G4double edep);
+    void AddPositionTimeMomentum(G4double x, G4double y, G4double z, G4double t, G4double p);
 
 private:
     G4Accumulable<G4double> fEdep;
     G4Accumulable<G4double> fEdep2;
+    vector<G4double> fX;
+    vector<G4double> fY;
+    vector<G4double> fZ;
+    vector<G4double> fTime;
+    vector<G4double> fp;
+
+    TString filename = "";
+    TFile* file = nullptr;
+    TTree* tree = nullptr;
 };
 
 #endif

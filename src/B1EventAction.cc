@@ -56,42 +56,35 @@ void B1EventAction::BeginOfEventAction(const G4Event*)
     fY.clear();
     fZ.clear();
     fTime.clear();
+    fp.clear();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void B1EventAction::EndOfEventAction(const G4Event*)
 {
-    const G4double c = 299.792458 * mm / ns;
-    const G4double mass = 938.272088 * MeV;
-    // accumulate statistics in run action
     fRunAction->AddEdep(fEdep);
-    vector<G4double> p = {};
     for (G4int i = 0; i < (G4int) fX.size(); i++)
-    {
-        G4double speed = TMath::Sqrt(TMath::Power(fX.at(i), 2) + TMath::Power(fY.at(i), 2) + TMath::Power(fZ.at(i), 2)) / fTime.at(i) / c;
-        G4double momentum = mass * speed / TMath::Sqrt(1 - TMath::Power(speed, 2));
-        p.emplace_back(momentum);
-    }
+        fRunAction->AddPositionTimeMomentum(fX.at(i), fY.at(i), fZ.at(i), fTime.at(i), fp.at(i));
 
-    G4cout << "X: " << endl;
+    G4cout << "X diff: " << endl;
     for (G4int i = 0; i < (G4int) fX.size(); i++)
         G4cout << fX.at(i) << "  ";
     G4cout << G4endl;
-    G4cout << "Y: " << endl;
+    G4cout << "Y diff: " << endl;
     for (G4int i = 0; i < (G4int) fY.size(); i++)
         G4cout << fY.at(i) << "  ";
     G4cout << G4endl;
-    G4cout << "Z: " << endl;
+    G4cout << "Z diff: " << endl;
     for (G4int i = 0; i < (G4int) fZ.size(); i++)
         G4cout << fZ.at(i) << "  ";
     G4cout << G4endl;
-    G4cout << "Time: " << endl;
+    G4cout << "Time diff: " << endl;
     for (G4int i = 0; i < (G4int) fTime.size(); i++)
         G4cout << fTime.at(i) << "  ";
     G4cout << G4endl;
     G4cout << "Momentum: " << endl;
-    for (G4int i = 0; i < (G4int) p.size(); i++)
-        G4cout << p.at(i) << "  ";
+    for (G4int i = 0; i < (G4int) fp.size(); i++)
+        G4cout << fp.at(i) << "  ";
     G4cout << G4endl;
 }

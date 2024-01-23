@@ -47,22 +47,20 @@ B1RunAction::B1RunAction()
           fEdep(0.),
           fEdep2(0.)
 {
-    // add new units for dose
-    //
-    const G4double milligray = 1.e-3*gray;
-    const G4double microgray = 1.e-6*gray;
-    const G4double nanogray  = 1.e-9*gray;
-    const G4double picogray  = 1.e-12*gray;
-
-    new G4UnitDefinition("milligray", "milliGy" , "Dose", milligray);
-    new G4UnitDefinition("microgray", "microGy" , "Dose", microgray);
-    new G4UnitDefinition("nanogray" , "nanoGy"  , "Dose", nanogray);
-    new G4UnitDefinition("picogray" , "picoGy"  , "Dose", picogray);
-
     // Register accumulable to the accumulable manager
     G4AccumulableManager* accumulableManager = G4AccumulableManager::Instance();
     accumulableManager->RegisterAccumulable(fEdep);
     accumulableManager->RegisterAccumulable(fEdep2);
+
+    filename = "out.root";
+    file = new TFile(filename, "RECREATE");
+    tree = new TTree("tree", "Momenta");
+
+    tree->Branch("Time_Diff", &fTime);
+    tree->Branch("X_Diff", &fX);
+    tree->Branch("Y_Diff", &fY);
+    tree->Branch("Z_Diff", &fZ);
+    tree->Branch("momentum", &fp);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -95,6 +93,11 @@ void B1RunAction::AddEdep(G4double edep)
     fEdep2 += edep*edep;
 }
 
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
+void B1RunAction::AddPositionTimeMomentum(G4double x, G4double y, G4double z, G4double t, G4double p)
+{
+    fX.emplace_back(x);
+    fY.emplace_back(y);
+    fZ.emplace_back(z);
+    fTime.emplace_back(t);
+    fp.emplace_back(p);
+}
