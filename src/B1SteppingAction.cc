@@ -71,19 +71,26 @@ void B1SteppingAction::UserSteppingAction(const G4Step *step) {
     fEventAction->AddEdep(edepStep);
 
     // Collect position and time difference
-    G4ThreeVector positionStep = step->GetDeltaPosition();
+//    G4ThreeVector positionStep = step->GetDeltaPosition();
+//    G4double xStep = positionStep.getX();
+//    G4double yStep = positionStep.getY();
+//    G4double zStep = positionStep.getZ();
+    G4StepPoint* stepInfo = step->GetPostStepPoint();
+    G4ThreeVector positionStep = stepInfo->GetPosition();
     G4double xStep = positionStep.getX();
     G4double yStep = positionStep.getY();
     G4double zStep = positionStep.getZ();
-    G4double timeStep = step->GetDeltaTime();
+//    G4double timeStep = step->GetDeltaTime();
+    G4double timeStep = stepInfo->GetGlobalTime();
+    G4double momentum = stepInfo->GetMomentum().mag();
 
 //    const G4double c = 299.792458 * mm / ns;
 //    const G4double mass = 938.272088 * MeV;
 //    G4double distanceStep = step->GetDeltaPosition().mag();
 //    G4double speed = distanceStep / timeStep / c;
 //    G4double momentum = mass * speed / TMath::Sqrt(1 - TMath::Power(speed, 2));
-    G4Track* trackStep = step->GetTrack();
-    G4double momentum = trackStep->GetMomentum().mag();
+//    G4Track* trackStep = step->GetTrack();
+//    G4double momentum = trackStep->GetMomentum().mag();
     fEventAction->AddPositionTimeMomentum(xStep, yStep, zStep, timeStep, momentum);
 }
 

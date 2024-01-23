@@ -77,25 +77,25 @@ void B1EventAction::EndOfEventAction(const G4Event*)
     fRunAction->fill();
 
     /*
-    G4cout << "X diff: " << endl;
+    G4cout << "X [mm]: " << endl;
     for (G4int i = 0; i < (G4int) fX.size(); i++)
         G4cout << fX.at(i) << "  ";
     G4cout << G4endl;
-    G4cout << "Y diff: " << endl;
+    G4cout << "Y [mm]: " << endl;
     for (G4int i = 0; i < (G4int) fY.size(); i++)
         G4cout << fY.at(i) << "  ";
     G4cout << G4endl;
-    G4cout << "Z diff: " << endl;
+    G4cout << "Z [mm]: " << endl;
     for (G4int i = 0; i < (G4int) fZ.size(); i++)
         G4cout << fZ.at(i) << "  ";
     G4cout << G4endl;
-    G4cout << "Time diff: " << endl;
+    G4cout << "Global time [ns]: " << endl;
     for (G4int i = 0; i < (G4int) fTime.size(); i++)
         G4cout << fTime.at(i) << "  ";
     G4cout << G4endl;
-    G4cout << "Momentum: " << endl;
+    G4cout << "Momentum [MeV]: " << endl;
     for (G4int i = 0; i < (G4int) fp.size(); i++)
         G4cout << fp.at(i) << "  ";
-    G4cout << G4endl;
+    G4cout << G4endl << G4endl;
      */
 }

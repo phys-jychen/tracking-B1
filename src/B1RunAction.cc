@@ -74,10 +74,10 @@ void B1RunAction::BeginOfRunAction(const G4Run*)
     file = new TFile(filename, "RECREATE");
     tree = new TTree("tree", "Momenta");
 
-    tree->Branch("Time_Diff", &fTime);
-    tree->Branch("X_Diff", &fX);
-    tree->Branch("Y_Diff", &fY);
-    tree->Branch("Z_Diff", &fZ);
+    tree->Branch("Hit_Time", &fTime);
+    tree->Branch("Hit_X", &fX);
+    tree->Branch("Hit_Y", &fY);
+    tree->Branch("Hit_Z", &fZ);
     tree->Branch("momentum", &fp);
 }
 
