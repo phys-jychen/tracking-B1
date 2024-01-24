@@ -80,6 +80,7 @@ void B1RunAction::EndOfRunAction(const G4Run*)
     file->Write("", TObject::kOverwrite);
     file->Close();
     delete file;
+    file = nullptr;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

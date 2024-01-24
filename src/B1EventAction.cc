@@ -95,28 +95,28 @@ void B1EventAction::EndOfEventAction(const G4Event*)
     // Printing hit information --- for debugging
     /*
     G4cout << "X [mm]: " << endl;
-    for (G4int i = 0; i < (G4int) fX.size(); i++)
-        G4cout << fX.at(i) << "  ";
+    for (G4double i : fX)
+        G4cout << i << "  ";
     G4cout << G4endl;
     G4cout << "Y [mm]: " << endl;
-    for (G4int i = 0; i < (G4int) fY.size(); i++)
-        G4cout << fY.at(i) << "  ";
+    for (G4double i : fY)
+        G4cout << i << "  ";
     G4cout << G4endl;
     G4cout << "Z [mm]: " << endl;
-    for (G4int i = 0; i < (G4int) fZ.size(); i++)
-        G4cout << fZ.at(i) << "  ";
+    for (G4double i : fZ)
+        G4cout << i << "  ";
     G4cout << G4endl;
     G4cout << "Time difference [ns]: " << endl;
-    for (G4int i = 0; i < (G4int) fTime.size(); i++)
-        G4cout << fTime.at(i) << "  ";
+    for (G4double i : fTime)
+        G4cout << i << "  ";
     G4cout << G4endl;
     G4cout << "Momentum [MeV]: " << endl;
-    for (G4int i = 0; i < (G4int) fp.size(); i++)
-        G4cout << fp.at(i) << "  ";
+    for (G4double i : fp)
+        G4cout << i << "  ";
     G4cout << G4endl;
     G4cout << "Energy [MeV]: " << endl;
-    for (G4int i = 0; i < (G4int) fE.size(); i++)
-        G4cout << fE.at(i) << "  ";
+    for (G4double i : fE)
+        G4cout << i << "  ";
     G4cout << G4endl << G4endl;
      */
 }
